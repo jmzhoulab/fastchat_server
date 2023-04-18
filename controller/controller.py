@@ -24,7 +24,7 @@ from flask import Blueprint, url_for, request, render_template, session,redirect
 
 logger = build_logger("fastchat_server", "fastchat_server.log")
 
-headers = {"User-Agent": "fastchat Client"}
+headers = {"User-Agent": "FastChat Client"}
 
 no_change_btn = gr.Button.update()
 enable_btn = gr.Button.update(interactive=True)
@@ -130,7 +130,7 @@ def new_state(query):
     # TODO 当前暂且使用IP地址，后续新增用户管理。增删问题后续再处理
     addr = request.remote_addr
     if addr not in user_states:
-        state = conv_templates['v1'].copy()
+        state = conv_templates['vicuna_v1.1'].copy()
         state.conv_id = uuid.uuid4().hex
         user_states[addr] = state
     state = user_states[addr]
@@ -154,7 +154,7 @@ def chat(query):
              max_new_tokens=settings['max_new_tokens'],
              client_host=request.remote_addr)
     print(state.messages)
-    return state.messages[-1][-1]
+    return state.messages[-1][-1].split('###')[0].strip()
 
 
 @fastChatModule.route("/get_test1", methods=["GET"])
