@@ -28,7 +28,7 @@ web ui: http://host:7860
 nohup python3 fastchat_server/app.py > app.log 2>&1 &
 ```
 
-## API
+API interface
 - method: POST
 - url: http://host:8088/fastchat/query
 - header
